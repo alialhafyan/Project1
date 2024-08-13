@@ -20,10 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xz)(uqu+#6112k90=1x+!@92%&+zi^dd50*@pz%s$szrl^-gqj'
+import os
+from django.core.management.utils import get_random_secret_key
+
+SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
+DEBUG = os.getenv('DEBUG', 'False').lower() in ['true', '1']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =True
 
 ALLOWED_HOSTS = ['*']
 
@@ -94,7 +99,7 @@ WSGI_APPLICATION = 'Hall_reservation.wsgi.application'
 
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-import dj_database_url
+# import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(conn_max_age=600)
